@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-
 import junit.framework.TestCase;
-
-
-
-
 
 /**
  * Performs Validation Test for url validations.
@@ -35,9 +30,7 @@ public class UrlValidatorTest extends TestCase {
    public UrlValidatorTest(String testName) {
       super(testName);
    }
-
-   
-   
+  
    public void testManualTest()
    {
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
@@ -52,9 +45,7 @@ public class UrlValidatorTest extends TestCase {
 	   System.out.println(urlVal.isValid("https://www.a-.com/index_2_4.html"));
 	   /*Test INVALID scheme, valid authority, valid port EXPECT FALSE */
 	   System.out.println(urlVal.isValid("hst://www.amazon.com/"));
-	   
    }
-   
    
    public void testYourFirstPartition()
    {
@@ -64,7 +55,6 @@ public class UrlValidatorTest extends TestCase {
    public void testYourSecondPartition(){
 	   
    }
-   
    
    public void testIsValid()
    {
@@ -78,6 +68,7 @@ public class UrlValidatorTest extends TestCase {
    {
 	   
    }
+   
    /**
     * Create set of tests by taking the testUrlXXX arrays and
     * running through all possible permutations of their combinations.
@@ -85,5 +76,52 @@ public class UrlValidatorTest extends TestCase {
     * @param testObjects Used to create a url.
     */
    
-
+   // ----------------- Programming Based Testing -------------
+   public void testProgrammic()
+   {
+      // TODO: Kevin -- This is still a work in progress
+	   // TODO: Figure out more valid and invalid schemes
+	   // TODO: Figure out more valid and invalid authorities
+	   // TODO: Create more tests for port, path, and query
+	   // Schema I am testing: scheme+authority+port+path+query
+	   // <scheme>://<authority><path>?<query>
+	   System.out.println("Running programming based testing...unfinished");
+	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String url;
+	   Boolean urlValid;
+	   for (ResultPair i : testUrlScheme)
+	   {
+		   
+		   for (ResultPair j : testUrlAuthority)
+		   {
+			   url = i.item + j.item;
+			   urlValid = urlVal.isValid(url);
+			   if ((i.valid && j.valid && urlValid) || ((!i.valid || !j.valid) && !urlValid))
+			   {
+				   // Tests pass if both components are valid and the url is valid
+				   // OR
+				   // if either of the components are invalid and the url is invalid
+				   System.out.println("Passed: URL -> " + url + ". Expected: " + (i.valid && j.valid) + ". Actual: " + urlValid);
+			   }
+			   else
+			   {
+				   System.out.println("Passed: URL -> " + url + ". Expected: " + (i.valid && j.valid) + ". Actual: " + urlValid);
+			   }
+//			   System.out.println(url);
+		   }
+	   }
+   }
+   
+   ResultPair[] testUrlScheme = {
+		   	new ResultPair("http://", true),
+	        new ResultPair("https://", true),
+	        new ResultPair("ftp://", true),
+	        new ResultPair("blah://", false),
+	        };
+   
+   ResultPair[] testUrlAuthority = {
+		   	new ResultPair("www.google.com", true),
+	        new ResultPair("google.com", true),	        
+	        };
 }
