@@ -46,7 +46,7 @@ public class UrlValidatorTest extends TestCase {
 	   /*Test INVALID scheme, valid authority, valid port EXPECT FALSE */
 	   System.out.println(urlVal.isValid("hst://www.amazon.com/"));
    }
-   
+
    public void testYourFirstPartition()
    {
 	   
@@ -77,15 +77,18 @@ public class UrlValidatorTest extends TestCase {
     */
    
    // ----------------- Programming Based Testing -------------
-   public void testProgrammic()
+   // TODO: Kevin -- This is still a work in progress
+   // TODO: Figure out more valid and invalid schemes
+   // TODO: Figure out more valid and invalid authorities
+   // TODO: Create more tests for path, and query
+   // Schema I am testing: scheme+authority+port+path+query
+   // <scheme>://<authority><path>?<query>
+   
+   // Programmic test for Scheme+Authority
+   public void testProgrammicSchemeAuthority()
    {
-      // TODO: Kevin -- This is still a work in progress
-	   // TODO: Figure out more valid and invalid schemes
-	   // TODO: Figure out more valid and invalid authorities
-	   // TODO: Create more tests for port, path, and query
-	   // Schema I am testing: scheme+authority+port+path+query
-	   // <scheme>://<authority><path>?<query>
-	   System.out.println("Running programming based testing...unfinished");
+
+	   System.out.println("Running programming based testing for scheme+authority...");
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 	   
 	   String url;
@@ -102,15 +105,44 @@ public class UrlValidatorTest extends TestCase {
 				   // Tests pass if both components are valid and the url is valid
 				   // OR
 				   // if either of the components are invalid and the url is invalid
-				   System.out.println("Passed: URL -> " + url + ". Expected: " + (i.valid && j.valid) + ". Actual: " + urlValid);
+				   System.out.println("Passed: URL -> <" + url + ">... Expected: " + (i.valid && j.valid) + ". Actual: " + urlValid);
 			   }
 			   else
 			   {
-				   System.out.println("Passed: URL -> " + url + ". Expected: " + (i.valid && j.valid) + ". Actual: " + urlValid);
+				   System.out.println("Failed: URL -> <" + url + ">. Expected: " + (i.valid && j.valid) + ". Actual: " + urlValid);
 			   }
-//			   System.out.println(url);
 		   }
 	   }
+   }
+   
+   public void testProgrammicPort()
+   {
+
+	   System.out.println("Running programming based testing for port...");
+	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String baseUrl = "http://www.google.com";
+	   String url;
+	   Boolean urlValid;
+
+		   
+	   for (ResultPair j : testUrlPort)
+	   {
+		   url = baseUrl + j.item;
+		   urlValid = urlVal.isValid(url);
+		   if ((j.valid && urlValid) || (!j.valid && !urlValid))
+		   {
+			   // Tests pass if port is valid and the url is valid
+			   // OR
+			   // if port is invalid and the url is invalid
+			   System.out.println("Passed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
+		   }
+		   else
+		   {
+			   System.out.println("Failed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
+		   }
+	   }
+
    }
    
    ResultPair[] testUrlScheme = {
@@ -123,5 +155,10 @@ public class UrlValidatorTest extends TestCase {
    ResultPair[] testUrlAuthority = {
 		   	new ResultPair("www.google.com", true),
 	        new ResultPair("google.com", true),	        
+	        };
+   
+   ResultPair[] testUrlPort = {
+		   	new ResultPair("", true),
+	        new ResultPair(":80", true),	        
 	        };
 }
