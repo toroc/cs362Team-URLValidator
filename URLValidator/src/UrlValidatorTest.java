@@ -34,18 +34,17 @@ public class UrlValidatorTest extends TestCase {
    public void testManualTest()
    {
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-//	   /*Test valid scheme, valid authority, valid port EXPECT TRUE */
-//	   System.out.println(urlVal.isValid("http://www.amazon.com/"));
-//	   /*Test valid scheme, authority, port, and valid path EXPECT TRUE*/
-//	   System.out.println(urlVal.isValid("https://www.amazon.com/index_2_4.html"));
-//	   /*Test valid scheme, authority, port, path, and valid query EXPECT TRUE*/
-//	   System.out.println(urlVal.isValid("http://www.amazon.com/t123?action=view"));
-//	   
-//	   /*Test valid scheme, INVALID authority, port, and valid path EXPECT FALSE*/
-//	   System.out.println(urlVal.isValid("https://www.a-.com/index_2_4.html"));
-//	   /*Test INVALID scheme, valid authority, valid port EXPECT FALSE */
-//	   System.out.println(urlVal.isValid("hst://www.amazon.com/"));
-	   System.out.println(urlVal.isValid("http://www.google.com:80/blah?key=value"));
+	   /*Test valid scheme, valid authority, valid port EXPECT TRUE */
+	   System.out.println(urlVal.isValid("http://www.amazon.com/"));
+	   /*Test valid scheme, authority, port, and valid path EXPECT TRUE*/
+	   System.out.println(urlVal.isValid("https://www.amazon.com/index_2_4.html"));
+	   /*Test valid scheme, authority, port, path, and valid query EXPECT TRUE*/
+	   System.out.println(urlVal.isValid("http://www.amazon.com/t123?action=view"));
+	   
+	   /*Test valid scheme, INVALID authority, port, and valid path EXPECT FALSE*/
+	   System.out.println(urlVal.isValid("https://www.a-.com/index_2_4.html"));
+	   /*Test INVALID scheme, valid authority, valid port EXPECT FALSE */
+	   System.out.println(urlVal.isValid("hst://www.amazon.com/"));
    }
 
    public void testYourFirstPartition()
@@ -65,11 +64,6 @@ public class UrlValidatorTest extends TestCase {
 	   }
    }
    
-   public void testAnyOtherUnitTest()
-   {
-	   
-   }
-   
    /**
     * Create set of tests by taking the testUrlXXX arrays and
     * running through all possible permutations of their combinations.
@@ -78,14 +72,10 @@ public class UrlValidatorTest extends TestCase {
     */
    
    // ----------------- Programming Based Testing -------------
-   // TODO: Kevin -- This is still a work in progress
-   // TODO: Figure out more valid and invalid schemes
-   // TODO: Figure out more valid and invalid authorities
-   // TODO: Create more tests for path, and query
    // Schema I am testing: scheme+authority+port+path+query
    // <scheme>://<authority><path>?<query>
    
-   // Programmic test for Scheme+Authority
+   // Loop though different scheme and authorities
    public void testProgrammicSchemeAuthority()
    {
 
@@ -116,6 +106,7 @@ public class UrlValidatorTest extends TestCase {
 	   }
    }
    
+   // Loop though different different ports with the rest of the url being valid
    public void testProgrammicPort()
    {
 
@@ -145,6 +136,7 @@ public class UrlValidatorTest extends TestCase {
 	   }	   
    }
 
+   // Loop though different paths with the rest of the url being valid
    public void testProgrammicPath()
    {
 
@@ -174,6 +166,7 @@ public class UrlValidatorTest extends TestCase {
 	   }	   
    }
    
+   // Loop though different queries with the rest of the url being valid
    public void testProgrammicQuery()
    {
 
@@ -208,21 +201,50 @@ public class UrlValidatorTest extends TestCase {
 	        new ResultPair("https://", true),
 	        new ResultPair("ftp://", true),
 	        new ResultPair("blah://", false),
+	        new ResultPair("://", false),
+	        new ResultPair("/", false),
+	        new ResultPair(":", false),
+	        new ResultPair("123", false),
+	        new ResultPair("!!", false),
+	        new ResultPair("http:", false),
 	        };
    
    ResultPair[] testUrlAuthority = {
 		   	new ResultPair("www.google.com", true),
-	        new ResultPair("google.com", true),	        
+	        new ResultPair("google.com", true),
+	        new ResultPair("192.168.0.0", true),
+	        new ResultPair("1000.1000.1000.1000", false),
+	        new ResultPair("1000.10.10.10", false),
+	        new ResultPair("....", false),
+	        new ResultPair("abc", false),	        
+	        new ResultPair("123", false),
+	        new ResultPair(".a.b.a.", false)
 	        };
    
    ResultPair[] testUrlPort = {
 		   	new ResultPair("", true),
-	        new ResultPair(":80", true),	        
+	        new ResultPair(":80", true),
+	        new ResultPair(":8080", true),
+	        new ResultPair(":80808", true),
+	        new ResultPair(":808080", false),
+	        new ResultPair(":8a", false),
+	        new ResultPair(":8A", false),
+	        new ResultPair(":88A8", false),
+	        new ResultPair(":8AAAAA", false),
+	        new ResultPair(":!@#", false),
+	        new ResultPair(":-100", false)
 	        };
    
    ResultPair[] testUrlPath = {
 		   	new ResultPair("", true),
-	        new ResultPair("/blah", true),	        
+	        new ResultPair("/blah", true),
+	        new ResultPair("/.", true),
+	        new ResultPair("/..", false),
+	        new ResultPair("/...", false),
+	        new ResultPair("/?", true),
+	        new ResultPair("/??", true),
+	        new ResultPair("/blah/foo", true),
+	        new ResultPair("/blah/foo/bar", true)
 	        };
    
    ResultPair[] testUrlQuery = {
@@ -230,6 +252,6 @@ public class UrlValidatorTest extends TestCase {
 	        new ResultPair("?key==value", true),
 	        new ResultPair("?key===value", true),    
 	        new ResultPair("?key=?value", true),    
-	        new ResultPair("?key=??value", true),    
+	        new ResultPair("?key=??value", true)   
 	        };
 }
