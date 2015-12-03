@@ -34,17 +34,18 @@ public class UrlValidatorTest extends TestCase {
    public void testManualTest()
    {
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-	   /*Test valid scheme, valid authority, valid port EXPECT TRUE */
-	   System.out.println(urlVal.isValid("http://www.amazon.com/"));
-	   /*Test valid scheme, authority, port, and valid path EXPECT TRUE*/
-	   System.out.println(urlVal.isValid("https://www.amazon.com/index_2_4.html"));
-	   /*Test valid scheme, authority, port, path, and valid query EXPECT TRUE*/
-	   System.out.println(urlVal.isValid("http://www.amazon.com/t123?action=view"));
-	   
-	   /*Test valid scheme, INVALID authority, port, and valid path EXPECT FALSE*/
-	   System.out.println(urlVal.isValid("https://www.a-.com/index_2_4.html"));
-	   /*Test INVALID scheme, valid authority, valid port EXPECT FALSE */
-	   System.out.println(urlVal.isValid("hst://www.amazon.com/"));
+//	   /*Test valid scheme, valid authority, valid port EXPECT TRUE */
+//	   System.out.println(urlVal.isValid("http://www.amazon.com/"));
+//	   /*Test valid scheme, authority, port, and valid path EXPECT TRUE*/
+//	   System.out.println(urlVal.isValid("https://www.amazon.com/index_2_4.html"));
+//	   /*Test valid scheme, authority, port, path, and valid query EXPECT TRUE*/
+//	   System.out.println(urlVal.isValid("http://www.amazon.com/t123?action=view"));
+//	   
+//	   /*Test valid scheme, INVALID authority, port, and valid path EXPECT FALSE*/
+//	   System.out.println(urlVal.isValid("https://www.a-.com/index_2_4.html"));
+//	   /*Test INVALID scheme, valid authority, valid port EXPECT FALSE */
+//	   System.out.println(urlVal.isValid("hst://www.amazon.com/"));
+	   System.out.println(urlVal.isValid("http://www.google.com:80/blah?key=value"));
    }
 
    public void testYourFirstPartition()
@@ -141,8 +142,65 @@ public class UrlValidatorTest extends TestCase {
 		   {
 			   System.out.println("Failed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
 		   }
-	   }
+	   }	   
+   }
 
+   public void testProgrammicPath()
+   {
+
+	   System.out.println("Running programming based testing for path...");
+	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String baseUrl = "http://www.google.com:80";
+	   String url;
+	   Boolean urlValid;
+
+		   
+	   for (ResultPair j : testUrlPath)
+	   {
+		   url = baseUrl + j.item;
+		   urlValid = urlVal.isValid(url);
+		   if ((j.valid && urlValid) || (!j.valid && !urlValid))
+		   {
+			   // Tests pass if port is valid and the url is valid
+			   // OR
+			   // if port is invalid and the url is invalid
+			   System.out.println("Passed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
+		   }
+		   else
+		   {
+			   System.out.println("Failed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
+		   }
+	   }	   
+   }
+   
+   public void testProgrammicQuery()
+   {
+
+	   System.out.println("Running programming based testing for query...");
+	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String baseUrl = "http://www.google.com:80/blah";
+	   String url;
+	   Boolean urlValid;
+
+		   
+	   for (ResultPair j : testUrlQuery)
+	   {
+		   url = baseUrl + j.item;
+		   urlValid = urlVal.isValid(url);
+		   if ((j.valid && urlValid) || (!j.valid && !urlValid))
+		   {
+			   // Tests pass if port is valid and the url is valid
+			   // OR
+			   // if port is invalid and the url is invalid
+			   System.out.println("Passed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
+		   }
+		   else
+		   {
+			   System.out.println("Failed: URL -> <" + url + ">... Expected: " + j.valid + ". Actual: " + urlValid);
+		   }
+	   }	   
    }
    
    ResultPair[] testUrlScheme = {
@@ -160,5 +218,18 @@ public class UrlValidatorTest extends TestCase {
    ResultPair[] testUrlPort = {
 		   	new ResultPair("", true),
 	        new ResultPair(":80", true),	        
+	        };
+   
+   ResultPair[] testUrlPath = {
+		   	new ResultPair("", true),
+	        new ResultPair("/blah", true),	        
+	        };
+   
+   ResultPair[] testUrlQuery = {
+		   	new ResultPair("", true),
+	        new ResultPair("?key==value", true),
+	        new ResultPair("?key===value", true),    
+	        new ResultPair("?key=?value", true),    
+	        new ResultPair("?key=??value", true),    
 	        };
 }
