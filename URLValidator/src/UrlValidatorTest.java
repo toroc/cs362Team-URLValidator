@@ -71,11 +71,11 @@ public class UrlValidatorTest extends TestCase {
 			   !urlVal.isValid("http://gotcha.zmb") &&
 			   !urlVal.isValid("http://.xyz"))
 		   {
-			   System.out.println("invalid authority passed possible bug");
+			   System.out.println("invalid authority failed as expected");
 		   }
 		   else
 		   {
-			   System.out.println("invalid authority failed as expected");
+			   System.out.println("atleast one invalid authority passed, possible bug");
 		   }
 		   //valid authority
 	   if (urlVal.isValid("http://256.256.256.256") &&
@@ -98,11 +98,11 @@ public class UrlValidatorTest extends TestCase {
 			   !urlVal.isValid("http://www.google.com:45d") &&
 			   !urlVal.isValid("http://www.google.com:x7") )
 		   {
-			   System.out.println("invalid port passed possible bug");
+			   System.out.println("invalid port failed as expected");
 		   }
 		   else
 		   {
-			   System.out.println("invalid port failed as expected");
+			   System.out.println("at least one invalid port passed, possible bug");
 		   }
 		 
 	   if (urlVal.isValid("http://www.google.com:88") &&
@@ -130,11 +130,11 @@ public class UrlValidatorTest extends TestCase {
 			   !urlVal.isValid("htttttp/www.google.com") &&
 			   !urlVal.isValid(":://www.google.com"))
 		   {
-			   System.out.println("invalid input schemes passed possible bug");
+			   System.out.println("invalid input schemes failed as expected");
 		   }
 		   else
 		   {
-			   System.out.println("invalid input schemes failed as expected");
+			   System.out.println("atleast one invalid input scheme passed, possible bug");
 		   }
 		//testing valid schemes
 		if (urlVal.isValid("http://www.google.com") &&
