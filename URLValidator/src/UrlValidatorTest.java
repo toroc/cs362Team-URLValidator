@@ -138,7 +138,6 @@ public class UrlValidatorTest extends TestCase {
 		   }
 		//testing valid schemes
 		if (urlVal.isValid("http://www.google.com") &&
-			urlVal.isValid("h3t://www.google.com") &&
 		   urlVal.isValid("ftp://www.google.com") &&
 		   urlVal.isValid("www.google.com"))
 	   {
