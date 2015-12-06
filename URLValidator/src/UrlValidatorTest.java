@@ -111,7 +111,7 @@ public class UrlValidatorTest extends TestCase {
 	   //invalid authority
 	   if (	!urlVal.isValid("http://gotcha.zmb") &&
 			   !urlVal.isValid("http://0.0.0.0") &&
-			   !urlVal.isValid("http://gotcha.zmb") &&
+			   !urlVal.isValid("http://gotcha.zmb.xyz") &&
 			   !urlVal.isValid("http://.xyz"))
 		   {
 			   System.out.println("invalid authority failed as expected");
