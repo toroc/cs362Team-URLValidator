@@ -52,8 +52,7 @@ public class UrlValidatorTest extends TestCase {
 		
 	    UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 	   //invalid authority
-	   if ( !urlVal.isValid("http://gotcha.com") &&
-			   !urlVal.isValid("http://gotcha.zmb") &&
+	   if (	!urlVal.isValid("http://gotcha.zmb") &&
 			   !urlVal.isValid("http://0.0.0.0") &&
 			   !urlVal.isValid("http://gotcha.zmb") &&
 			   !urlVal.isValid("http://.xyz"))
