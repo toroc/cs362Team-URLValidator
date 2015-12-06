@@ -85,6 +85,7 @@ public class UrlValidatorTest extends TestCase {
 	public void testYourSecondPartition() {
 		System.out.println("Running Second Partition Testing...");
 		
+<<<<<<< HEAD
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 		// testing invalid ports
 		if (!urlVal.isValid("http://www.google.com:-8") && !urlVal.isValid("http://www.google.com:-82")
@@ -105,6 +106,92 @@ public class UrlValidatorTest extends TestCase {
 
 	public void testYourThirdPartition() {
 		System.out.println("Running Third Partition Testing...");
+=======
+	    UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   //invalid authority
+	   if (	!urlVal.isValid("http://gotcha.zmb") &&
+			   !urlVal.isValid("http://0.0.0.0") &&
+			   !urlVal.isValid("http://gotcha.zmb") &&
+			   !urlVal.isValid("http://.xyz"))
+		   {
+			   System.out.println("invalid authority failed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("atleast one invalid authority passed, possible bug");
+		   }
+		   //valid authority
+	   if (urlVal.isValid("http://256.256.256.256") &&
+			   urlVal.isValid("http://www.google.com") &&
+			   urlVal.isValid("http://255.255.255.255"))
+		   {
+			   System.out.println("valid input authority passed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("valid authority failed, possible bug");
+		   }
+   }
+   
+   public void testYourSecondPartition(){
+		 UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   //testing invalid ports
+	   if (!urlVal.isValid("http://www.google.com:-8") &&
+			   !urlVal.isValid("http://www.google.com:-82") &&
+			   !urlVal.isValid("http://www.google.com:45d") &&
+			   !urlVal.isValid("http://www.google.com:x7") )
+		   {
+			   System.out.println("invalid port failed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("at least one invalid port passed, possible bug");
+		   }
+		 
+	   if (urlVal.isValid("http://www.google.com:88") &&
+			   urlVal.isValid("http://www.google.com:12345") &&
+			   urlVal.isValid("http://www.google.com:666") &&
+			   urlVal.isValid("http://www.google.com:0") )
+		   {
+			   System.out.println("valid port passed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("valid port failed possible bug");
+		   }
+	   
+   }
+   
+   
+   public void testYourThirdPartition() {
+	    UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   //testing invalid schemes
+	   if (!urlVal.isValid("7ht://www.google.com") &&
+			   !urlVal.isValid("http:www.google.com") &&
+			   !urlVal.isValid("http:/www.google.com") &&
+			   !urlVal.isValid("htttttp/www.google.com") &&
+			   !urlVal.isValid(":://www.google.com"))
+		   {
+			   System.out.println("invalid input schemes failed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("atleast one invalid input scheme passed, possible bug");
+		   }
+		//testing valid schemes
+		if (urlVal.isValid("http://www.google.com") &&
+		   urlVal.isValid("ftp://www.google.com") &&
+		   urlVal.isValid("www.google.com"))
+	   {
+		   System.out.println("valid input schemes passed as expected");
+	   }
+	   else
+	   {
+		   System.out.println("valid input schemes failed indication of a possible bug");
+	   }
+	  
+>>>>>>> 9d9312f098c782e6b78e02ab383f0d918705c5aa
 		
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 
