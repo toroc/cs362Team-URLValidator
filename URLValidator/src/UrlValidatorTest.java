@@ -49,20 +49,7 @@ public class UrlValidatorTest extends TestCase {
 
    public void testYourFirstPartition()
    {
-		/*
-		//testing invalid schemes
-	    UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		//Test invalid scheme, valid authority, valid port EXPECT False  
-	   System.out.println(urlVal.isValid("/www.amazon.com/"));
-		//Test invalid scheme, invalid authority, valid port EXPECT False  
-	   System.out.println(urlVal.isValid("/www.--a.100.com/"));
-	   //Test invalid scheme, invalid authority, invalid port EXPECT False  
-	   System.out.println(urlVal.isValid("/www.--a.100.com/:8a"));
-	    //Test invalid scheme, invalid authority, invalid port, valid path EXPECT False  
-	   System.out.println(urlVal.isValid("/www.--a.100.com/:8a/index_2_4.html"));
-	   //Test invalid scheme, invalid authority, invalid port, valid path EXPECT False  
-	   System.out.println(urlVal.isValid("/www.--a.100.com/:8a/index_2_4.html"));
-	   */
+		
 	    UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 	   //invalid authority
 	   if ( !urlVal.isValid("http://gotcha.com") &&
