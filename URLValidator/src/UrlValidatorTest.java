@@ -151,6 +151,38 @@ public class UrlValidatorTest extends TestCase {
 		
    }
    
+   
+   
+ public void testYourFourthPartition() {
+	    UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   //testing invalid Path
+			 if (!urlVal.isValid("http://www.google.com/....") &&
+			   !urlVal.isValid("http://www.google.com/..") &&
+			   !urlVal.isValid("http://www.google.com//..//") 
+		   {
+			   System.out.println("invalid path failed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("at least one invalid path passed, possible bug");
+		   }
+		 
+			 if (urlVal.isValid("http://www.google.com/index") &&
+			   urlVal.isValid("http://www.google.com/index/foo") &&
+			   urlVal.isValid("http://www.google.com/") &&
+			   urlVal.isValid("http://www.google.com/.") ) 
+		   {
+			   System.out.println("valid path passed as expected");
+		   }
+		   else
+		   {
+			   System.out.println("valid path failed possible bug");
+		   }
+	  
+		
+   }
+   
    public void testIsValid()
    {
 	   for(int i = 0;i<10000;i++)
